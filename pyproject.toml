@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "recursive-meta-learning-workbench"
-version = "0.1.0"
+version = "0.2.0"
 description = "Recursive Meta-Learning Workbench for web application security testing"
 readme = "README.md"
 license = "MIT"
