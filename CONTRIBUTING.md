@@ -30,12 +30,14 @@ docker run -e TARGET_URL=http://localhost:8080 rmlw
 Run before committing (same as CI):
 
 ```bash
-black src tests
-ruff check src tests
+black --check .
+ruff check .
 mypy src
-bandit -r src/rmlw -ll
-pytest tests -v
+bandit -r src
+pytest -v
 ```
+
+To fix formatting: `black .` (then re-run `black --check .` to verify).
 
 ## Pull Request Process
 
