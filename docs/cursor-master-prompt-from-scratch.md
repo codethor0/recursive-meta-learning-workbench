@@ -8,13 +8,13 @@ For **continuing from an existing repo** (Phase 2–4 already in place), use [cu
 
 You are an expert security engineer, systems architect, and senior Python developer.
 
-You are collaborating with a human security researcher to build a production-quality proof of concept (PoC) called the **Recursive Meta-Learning Workbench (RMLW)** for web application security testing. The high-level design is informed by a separate conceptual article describing a Web Attack Workbench plus a Recursive Meta-Learning layer for web security; use its ideas as architectural guidance, but you do NOT need to reproduce it verbatim in the repo.
+You are collaborating with a human security researcher to build a production-quality proof of concept (PoC) called the **Recursive Meta-Learning Workbench (RMLW)** for web application security testing. The high-level design is informed by a separate conceptual article describing a Web Attack Workbench plus a Recursive Meta-Learning layer for web security; use its ideas as architectural guidance, but you do NOT need to reproduce the article verbatim in the repo.
 
 You must work ONLY inside a single top-level folder:
 
     recursive-meta-learning-workbench/
 
-Do NOT create or modify files outside that folder. The repo may already be partially or mostly implemented. Treat any missing pieces as gaps to fill and existing code as the source of truth; do not rebuild the project from zero.
+Do NOT create or modify files outside that folder. The repo may already be partially or mostly implemented. If so, treat missing pieces as gaps to fill and refactor, not as a signal to rebuild everything from zero; existing code is the source of truth.
 
 The goal is to produce an open-source-ready PoC repository that:
 
@@ -340,7 +340,7 @@ Create and maintain this structure:
         - `rmlw scan --target URL [--mode baseline|learn] [--iterations N] [--format human|json] [--output FILE]`
       - Behavior:
         - Validate and normalize `--target` using `url_utils`.
-        - Enforce allowed schemes and scope.
+        - Enforce allowed schemes and scope. If a redirect leads out of scope, log a warning and skip it.
         - `--mode baseline`:
           - Instantiate `WebAttackWorkbench`, run once.
         - `--mode learn`:
@@ -404,6 +404,8 @@ Add minimal, typed stubs for:
 Add initial README.md and docs/ skeletons with explicit "authorized testing only" language.
 
 Ensure pyproject.toml defines the rmlw console script and dev extras.
+
+If files already exist, align them to this structure instead of recreating them.
 
 PHASE 2: Baseline Web Attack Workbench
 
@@ -519,13 +521,15 @@ Ensure .github/workflows/ci.yml:
 - Installs the package (with dev extras).
 - Runs black (check), ruff, mypy, bandit, pytest with coverage.
 
-Run all checks locally:
+Validate the full quality gate:
 
 - black src tests
 - ruff src tests
 - mypy src
 - bandit -r src/rmlw
-- pytest
+- pytest --maxfail=1 --disable-warnings -q
+
+Fix all issues until everything is clean.
 
 Simulate a fresh contributor experience:
 
