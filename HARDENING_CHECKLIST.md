@@ -39,3 +39,15 @@ pre-commit run --all-files
 ## CI
 
 After pushing, verify GitHub Actions CI workflow passes (lint-and-test, docker-build).
+
+## Cursor prompt workflow (local .cursor/ only)
+
+Three prompts support different workflows. Paste into Cursor Agent at repo root as needed:
+
+| Prompt | When to use |
+|--------|-------------|
+| **Master** (`rmlw-master-prompt.txt`) | Fresh clone, full re-audit, or major reshape. Inspects tree first, runs all gates and Docker, evolves existing code to match spec. |
+| **Runtime** (`rmlw-runtime-prompt.txt`) | Day-to-day: bug fixes, small features, test/doc tweaks. Keeps changes minimal and aligned with existing architecture. |
+| **Live Docker test** (`rmlw-live-docker-test-prompt.txt`) | End-to-end verification: rebuild image, spin up DVWA, run baseline + learning scans, tests in container. Use before cutting a release. |
+
+Suggested flow: Runtime for incremental work; Master after several edits or big changes; Live Docker test before tagging v0.1.1, v0.2.0, etc.

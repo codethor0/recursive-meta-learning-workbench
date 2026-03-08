@@ -1,5 +1,8 @@
 # Recursive Meta-Learning Workbench (RMLW)
 
+[![CI](https://github.com/codethor0/recursive-meta-learning-workbench/actions/workflows/ci.yml/badge.svg)](https://github.com/codethor0/recursive-meta-learning-workbench/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 RMLW is a transparent, research-focused proof of concept for web application security testing. It combines:
 
 - A **Web Attack Workbench** that runs targeted, explainable tests for common vulnerability classes (XSS, SQL injection, LFI/traversal, command injection, SSRF) against explicitly scoped targets.
