@@ -77,7 +77,7 @@ docker compose up -d dvwa
 4. Run RMLW:
 
 ```bash
-docker compose run --rm -e TARGET_URL=http://dvwa rmlw rmlw scan --target http://dvwa --mode baseline --format human
+docker compose run --rm rmlw rmlw scan --target http://dvwa --mode baseline --format human
 ```
 
 ## Troubleshooting
