@@ -72,17 +72,25 @@ rmlw scan --target http://localhost:8080 --format human
 rmlw scan --target http://localhost:8080 --mode learn --iterations 5 --output findings.json
 ```
 
+### Run tests locally
+
+```bash
+pytest -v
+black --check . && ruff check . && mypy src && bandit -r src
+```
+
 ### Docker
 
 ```bash
-docker build -t rmlw .
-docker run -e TARGET_URL=http://dvwa:80 rmlw
+docker build -t rmlw:local .
+docker run --rm -e TARGET_URL=http://localhost:8080 rmlw:local
 ```
 
-With docker-compose (see `docker-compose.yml` for DVWA setup):
+With docker-compose (DVWA lab target): uncomment the `dvwa` service in `docker-compose.yml`, then:
 
 ```bash
-docker compose up
+docker compose up -d dvwa
+docker compose run --rm rmlw rmlw scan --target http://dvwa --mode baseline --format human
 ```
 
 ## Project Structure
@@ -110,6 +118,7 @@ recursive-meta-learning-workbench/
 
 - [Contributing](CONTRIBUTING.md) - How to contribute
 - [Code of Conduct](CODE_OF_CONDUCT.md) - Community guidelines
+- [Security](SECURITY.md) - Vulnerability reporting and authorized use
 
 ## License
 

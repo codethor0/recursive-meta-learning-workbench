@@ -1,0 +1,66 @@
+name: Bug report
+description: Report a bug or unexpected behavior in RMLW
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        RMLW is for authorized lab and training environments only. Do not report issues related to scanning systems you do not own.
+  - type: input
+    id: version
+    attributes:
+      label: RMLW version
+      description: e.g. 0.1.0
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: input
+    id: python
+    attributes:
+      label: Python version
+      description: e.g. 3.10, 3.11
+      placeholder: "3.10"
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: OS
+      description: e.g. macOS, Ubuntu 22.04
+      placeholder: "macOS"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What happened?
+      placeholder: Describe the bug
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Minimal steps to reproduce
+      placeholder: |
+        1. pip install .[dev]
+        2. rmlw scan --target ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What actually happened? Include error output if relevant.
+    validations:
+      required: true

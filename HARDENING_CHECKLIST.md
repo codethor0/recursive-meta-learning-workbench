@@ -38,7 +38,9 @@ pre-commit run --all-files
 
 ## CI
 
-After pushing, verify GitHub Actions CI workflow passes (lint-and-test, docker-build).
+After pushing, verify GitHub Actions CI workflow passes:
+- lint-and-test (black, ruff, mypy, bandit, pytest)
+- docker-build (builds image from Dockerfile)
 
 ## Cursor prompt workflow (local .cursor/ only)
 

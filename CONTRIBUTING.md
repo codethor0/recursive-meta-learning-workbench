@@ -5,29 +5,17 @@ Thank you for your interest in contributing.
 ## Development Setup
 
 ```bash
-git clone <repo>
+git clone https://github.com/codethor0/recursive-meta-learning-workbench.git
 cd recursive-meta-learning-workbench
 python -m venv .venv
-source .venv/bin/activate  # or .venv\Scripts\activate on Windows
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install .[dev]
 pre-commit install
 ```
 
-## Build and Run Docker
+## Quality Gates (run before committing)
 
-```bash
-docker build -t rmlw .
-docker run -e TARGET_URL=http://localhost:8080 rmlw
-```
-
-## Code Style
-
-- **Black** for formatting
-- **Ruff** for linting
-- **mypy** for type checking
-- **bandit** for security scanning
-
-Run before committing (same as CI):
+Same as CI. All must pass:
 
 ```bash
 black --check .
@@ -37,15 +25,24 @@ bandit -r src
 pytest -v
 ```
 
-To fix formatting: `black .` (then re-run `black --check .` to verify).
+To fix formatting: `black .` then re-run `black --check .` to verify.
+
+To fix ruff issues: `ruff check .` shows problems; fix manually or use `ruff check . --fix` where safe.
 
 ## Pull Request Process
 
 1. Create a branch from `main`
 2. Make changes with tests
-3. Ensure all checks pass
+3. Run all quality gates locally
 4. Submit PR with clear description
 5. Address review feedback
+
+## Do Not Commit
+
+- `.cursor/` or any local prompt files
+- Prompt text, agent transcripts, or LLM instructions
+- Emojis in code or docs
+- Secrets or credentials
 
 ## Scope
 
