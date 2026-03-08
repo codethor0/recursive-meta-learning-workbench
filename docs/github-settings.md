@@ -35,11 +35,13 @@ Configure these via GitHub's web UI (Settings). They cannot be set from this rep
 
 ## GitHub Wiki Setup
 
-The repo contains wiki source material in `docs/wiki/`. To publish it:
+The wiki is enabled. The repo contains wiki source material in `docs/wiki/`. To publish it:
+
+**One-time bootstrap**: Visit https://github.com/codethor0/recursive-meta-learning-workbench/wiki and click "Create the first page". Add any title (e.g. "Home"), add a single character, and save. This creates the wiki repo.
 
 **Option A: Create pages via the GitHub UI**
 
-1. After enabling the Wiki, click "Wiki" in the repo sidebar
+1. Click "Wiki" in the repo sidebar
 2. Create a new page for each file in `docs/wiki/`:
    - `Home.md` -> Home (or paste as the wiki front page)
    - `Getting-Started.md` -> Getting-Started
@@ -49,11 +51,20 @@ The repo contains wiki source material in `docs/wiki/`. To publish it:
 3. Copy the contents of each file from `docs/wiki/` and paste into the corresponding wiki page
 4. Save each page
 
-**Option B: Clone the wiki repo and sync**
+**Option B: Run the sync script (after bootstrap)**
 
-1. After enabling the Wiki, GitHub creates a `recursive-meta-learning-workbench.wiki` repo
+After creating the first page (see bootstrap above), run from the repo root:
+
+```bash
+chmod +x scripts/push-wiki.sh
+./scripts/push-wiki.sh
+```
+
+This clones the wiki repo, copies `docs/wiki/*.md` into it, commits, and pushes.
+
+**Option C: Clone the wiki repo and sync manually**
+
+1. After bootstrap, GitHub creates a `recursive-meta-learning-workbench.wiki` repo
 2. Clone it: `git clone https://github.com/codethor0/recursive-meta-learning-workbench.wiki.git`
-3. Copy the contents of `docs/wiki/*.md` into the wiki repo (e.g. `Home.md`, `Getting-Started.md`, etc.)
+3. Copy the contents of `docs/wiki/*.md` into the wiki repo
 4. Commit and push: `git add . && git commit -m "Add wiki pages" && git push origin main`
-
-Do not attempt to operate on the `.wiki.git` repo from within this project; these steps are manual guidance for the maintainer.
