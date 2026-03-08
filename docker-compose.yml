@@ -1,0 +1,29 @@
+# RMLW Docker Compose
+# For authorised lab use only. Only test targets you own or have permission to test.
+#
+# To run with DVWA:
+#   1. Uncomment the dvwa service below
+#   2. Run: docker compose up
+#   3. Log into DVWA at http://localhost:8080 (admin/password), set security to Low
+#
+# The workbench will scan TARGET_URL (default: http://dvwa:80).
+
+version: "3"
+
+services:
+  rmlw:
+    build: .
+    container_name: rmlw-workbench
+    environment:
+      - TARGET_URL=http://dvwa:80
+    # Uncomment when using dvwa target:
+    # depends_on:
+    #   - dvwa
+    # command: ["rmlw", "scan", "--target", "http://dvwa:80", "--mode", "learn", "--iterations", "3"]
+
+  # Deliberately vulnerable app for lab testing. Enable only when authorised.
+  # dvwa:
+  #   image: vulnerables/web-dvwa
+  #   container_name: dvwa
+  #   ports:
+  #     - "8080:80"
