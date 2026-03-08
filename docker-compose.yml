@@ -8,8 +8,6 @@
 #
 # The workbench will scan TARGET_URL (default: http://dvwa:80).
 
-version: "3"
-
 services:
   rmlw:
     build: .
@@ -19,9 +17,9 @@ services:
     # Uncomment when using dvwa target:
     # depends_on:
     #   - dvwa
-    # command: ["rmlw", "scan", "--target", "http://dvwa:80", "--mode", "learn", "--iterations", "3"]
 
   # Deliberately vulnerable app for lab testing. Enable only when authorised.
+  # Uncomment block below, then: docker compose up -d dvwa
   # dvwa:
   #   image: vulnerables/web-dvwa
   #   container_name: dvwa

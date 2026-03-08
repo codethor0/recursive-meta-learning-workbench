@@ -71,6 +71,12 @@ rmlw scan --target http://localhost:8080 --mode learn --iterations 10 --output f
 docker build -t rmlw .
 ```
 
+The image includes dev dependencies (pytest, black, ruff, mypy, bandit). To run tests inside the container:
+
+```bash
+docker run --rm rmlw pytest -v
+```
+
 ### Run
 
 TARGET_URL is required. The container exits with a usage message if not set:

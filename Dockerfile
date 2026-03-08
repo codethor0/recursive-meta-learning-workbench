@@ -7,8 +7,9 @@ WORKDIR /app
 
 COPY pyproject.toml README.md ./
 COPY src/ src/
+COPY tests/ tests/
 
-RUN pip install --no-cache-dir .
+RUN pip install --no-cache-dir ".[dev]"
 
 # TARGET_URL must be set at runtime. Example: docker run -e TARGET_URL=http://dvwa:80 rmlw
 # If not set, prints a helpful message and exits.
