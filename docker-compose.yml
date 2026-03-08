@@ -14,14 +14,11 @@ services:
     container_name: rmlw-workbench
     environment:
       - TARGET_URL=http://dvwa:80
-    # Uncomment when using dvwa target:
-    # depends_on:
-    #   - dvwa
+    depends_on:
+      - dvwa
 
-  # Deliberately vulnerable app for lab testing. Enable only when authorised.
-  # Uncomment block below, then: docker compose up -d dvwa
-  # dvwa:
-  #   image: vulnerables/web-dvwa
-  #   container_name: dvwa
-  #   ports:
-  #     - "8080:80"
+  dvwa:
+    image: vulnerables/web-dvwa
+    container_name: dvwa
+    ports:
+      - "8080:80"

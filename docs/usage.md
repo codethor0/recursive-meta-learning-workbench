@@ -62,6 +62,7 @@ rmlw scan --target http://localhost:8080 --mode learn --iterations 10 --output f
 | `--iterations` | Number of learning iterations (learn mode) | 5 |
 | `--output` | Output file for findings (always JSON, regardless of --format) | stdout |
 | `--format` | `human` (succinct summary) or `json` (machine-readable) | `human` |
+| `--no-wait` | Skip readiness check (do not wait for target HTTP 200) | wait up to 30s |
 
 ## Docker
 
@@ -107,10 +108,56 @@ docker compose run rmlw
 2. Run:
 
 ```bash
-docker compose up
+docker compose up -d dvwa
+```
+
+3. The CLI automatically waits for the target to return HTTP 200 before scanning (up to 30s). Use `--no-wait` to skip if the target is already known to be up.
+4. Run scans:
+
+```bash
+docker compose run --rm rmlw rmlw scan --target http://dvwa --mode baseline --format human
 ```
 
 The workbench will scan `http://dvwa:80` (or the configured `TARGET_URL`).
+
+## Examples (copy-paste)
+
+**Example 1: DVWA via Docker Compose (authorized lab only)**
+
+```bash
+# In docker-compose.yml, uncomment the dvwa service block, then:
+docker compose up -d dvwa
+# Wait for DVWA to be ready (or let the CLI wait via default readiness check)
+docker compose run --rm rmlw rmlw scan --target http://dvwa --mode baseline --format human
+docker compose run --rm rmlw rmlw scan --target http://dvwa --mode learn --iterations 5 --format json --output findings.json
+```
+
+**Example 2: Simple localhost target**
+
+If you have a local server on port 8080 (e.g. a static site or another lab app):
+
+```bash
+rmlw scan --target http://localhost:8080 --mode baseline --format human
+rmlw scan --target http://localhost:8080 --mode learn --iterations 3 --format json
+```
+
+Use `--no-wait` if the target is already up and you want to skip the readiness check.
+
+## Evaluation harness and lab workflows
+
+For local evaluation against DVWA use the lab script (not run in CI). Prerequisite: uncomment the `dvwa` service in `docker-compose.yml`.
+
+Minimal commands:
+
+- Short run (about 2–5 minutes): `./scripts/run-dvwa-lab.sh 10`
+- Longer run (about 5–15 minutes): `./scripts/run-dvwa-lab.sh 30`
+- Default 30 iterations: `./scripts/run-dvwa-lab.sh`
+
+The script builds `rmlw:local`, brings up DVWA, runs a baseline scan and a learn-mode run, then tears down. For the full workflow and copy-paste Docker commands, see [learning-lab-dvwa.md](learning-lab-dvwa.md). To capture a proof run and interpret logs, see [learning-proof-run.md](learning-proof-run.md).
+
+**Where output goes:** Findings (human format) go to stdout; learning logs (iteration, mechanism, reward, RL test choice) go to stderr. Use `--output FILE` to write findings as JSON to a file.
+
+**Interpreting findings:** Each finding has `ftype` (e.g. `xss_reflection`, `sqli_candidate`, `ssrf_candidate`, `lfi_candidate`, `cmdi_candidate`), `url`, `param`, `payload`, and optional `detail`. Use these to triage and confirm in your lab.
 
 ## Example Output
 

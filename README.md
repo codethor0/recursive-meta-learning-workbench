@@ -93,6 +93,8 @@ docker compose up -d dvwa
 docker compose run --rm rmlw rmlw scan --target http://dvwa --mode baseline --format human
 ```
 
+The CLI waits for the target to return HTTP 200 before scanning (use `--no-wait` to skip).
+
 ## Project Structure
 
 ```
@@ -113,10 +115,14 @@ recursive-meta-learning-workbench/
 - [Usage](docs/usage.md) – Commands and examples
 - [Security Model](docs/security_model.md) – Threat model and safety
 - [Roadmap](docs/roadmap.md) – Planned extensions
+- [Cursor Learning Lab instructions](docs/cursor-learning-lab-instructions.md) – Paste into Cursor Agent/Instructions for lab-only sessions
+- [Cursor Master Prompt (from scratch)](docs/cursor-master-prompt-from-scratch.md) – Build full RMLW PoC from scratch
+- [Cursor Master Prompt (continue)](docs/cursor-master-prompt-continue.md) – Extend existing repo without rebuilding
+- [Cursor daily-driver prompt](docs/cursor-daily-driver-prompt.md) – Short prompt for small maintenance tasks (fixes, tests, docs)
 
 ## Community
 
-- [Contributing](CONTRIBUTING.md) - How to contribute
+- [Contributing](CONTRIBUTING.md) - How to contribute (includes a [Getting Started for Contributors](CONTRIBUTING.md#getting-started-for-contributors) walkthrough: clone, venv, checks, sample scan)
 - [Code of Conduct](CODE_OF_CONDUCT.md) - Community guidelines
 - [Security](SECURITY.md) - Vulnerability reporting and authorized use
 

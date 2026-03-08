@@ -10,6 +10,7 @@ import sys
 from typing import Any
 
 from rmlw.learning import MetaController
+from rmlw.readiness import ReadinessTimeoutError, wait_for_http_ready
 from rmlw.url_utils import URLValidationError, validate_target_url
 from rmlw.workbench import Finding, WebAttackWorkbench
 
@@ -61,6 +62,11 @@ def main() -> None:
         default="human",
         help="Output format: human (succinct summary) or json (machine-readable)",
     )
+    scan_parser.add_argument(
+        "--no-wait",
+        action="store_true",
+        help="Skip readiness wait; assume target is already up",
+    )
 
     args = parser.parse_args()
 
@@ -69,6 +75,13 @@ def main() -> None:
             target_url = validate_target_url(args.target)
         except URLValidationError as e:
             parser.error(str(e))
+
+        if not args.no_wait:
+            try:
+                wait_for_http_ready(target_url)
+            except ReadinessTimeoutError as e:
+                print(e, file=sys.stderr)
+                sys.exit(1)
 
         workbench = WebAttackWorkbench(target_url)
 

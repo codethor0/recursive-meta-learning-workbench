@@ -36,7 +36,10 @@ class MetaController:
         - archive_reuse: Reuse high-fitness payloads from archive
         - baseline: Standard workbench run
 
-    Logs metrics for observability.
+    Reward: For each iteration, reward is defined as the number of findings
+    returned by the workbench run (len(findings)). The UCB bandit uses the
+    mean reward per mechanism to balance exploration and exploitation.
+    Logs strategy chosen, reward, and end-of-run mechanism counts.
     """
 
     def __init__(
@@ -109,6 +112,7 @@ class MetaController:
             logger.info("RL selected test: %s", test_choice)
 
         findings = self._run_workbench()
+        # Reward: number of findings this iteration (used by UCB and RL).
         reward = float(len(findings))
 
         for f in findings:
@@ -120,8 +124,17 @@ class MetaController:
         if mechanism == "archive_reuse":
             pass
         elif mechanism == "evolution":
+            n_before = len(self.evo.population)
+            survivors = max(1, n_before // 2)
             self.evo.evolve()
-            logger.info("Evolved population: %d payloads", len(self.evo.population))
+            n_after = len(self.evo.population)
+            logger.info(
+                "Evolution: population %d -> %d (survivors=%d, children=%d)",
+                n_before,
+                n_after,
+                survivors,
+                n_after - survivors,
+            )
 
         if mechanism == "rl" and test_choice:
             self.rl.update(env_before, test_choice, reward, self.env, self.available_tests)
@@ -150,4 +163,6 @@ class MetaController:
             logger.info("Starting iteration %d/%d", i + 1, n)
             findings = self.run_iteration()
             all_findings.extend(findings)
+        counts = ", ".join(f"{m}={self._ucb_counts[m]}" for m in MECHANISMS)
+        logger.info("Learn run complete: mechanism counts: %s", counts)
         return all_findings
