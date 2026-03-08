@@ -1,28 +1,15 @@
 # Recursive Meta-Learning Workbench (RMLW)
 
-A self-improving architecture for web application security testing. RMLW combines a transparent **Web Attack Workbench** with a **Recursive Meta-Learning** layer that learns from testing outcomes.
+RMLW is a transparent, research-focused proof of concept for web application security testing. It combines:
 
-RMLW is NOT a black-box scanner. It is a transparent, extensible PoC for security professionals to run against lab targets.
+- A **Web Attack Workbench** that runs targeted, explainable tests for common vulnerability classes (XSS, SQL injection, LFI/traversal, command injection, SSRF) against explicitly scoped targets.
+- A **Recursive Meta-Learning layer** that models the environment, uses reinforcement learning to prioritize tests, evolves payloads over time, and stores successful strategies in an archive.
+
+RMLW is designed for authorized lab and training environments, not for indiscriminate scanning. It emphasizes clarity, reproducibility, and extensibility rather than being a black-box scanner.
 
 ## Authorized Testing Only
 
 **Do not use on systems you do not own or have explicit permission to test.** This tool is for authorised testing in controlled environments only. Unauthorised access to computer systems is illegal. The authors assume no liability for misuse.
-
-## Overview
-
-RMLW provides two layers:
-
-1. **Web Attack Workbench** – A transparent, extensible Python library that:
-   - Models a web app as HTTP endpoints with parameters
-   - Runs targeted tests for XSS, SQLi, LFI, command injection, and SSRF
-   - Collects structured findings with payload and evidence
-
-2. **Recursive Meta-Learning Layer** – Wraps the Workbench with:
-   - Environment model (WAF hints, filters, successes/failures)
-   - RL-based test selection
-   - Evolutionary payload generation
-   - Persistent archive of successful payloads
-   - Meta-controller (multi-armed bandit) to orchestrate strategies
 
 ## Architecture
 
