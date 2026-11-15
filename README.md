@@ -129,3 +129,7 @@ recursive-meta-learning-workbench/
 ## License
 
 MIT License. See [LICENSE](LICENSE) for details.
+
+## Support
+
+If this project is useful to you, you can support its continued development through [GitHub Sponsors](https://github.com/sponsors/codethor0).
